@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject player;
     public int number;
-
+   public float playerspeed = 5f;
 
 
     private int number67;
@@ -43,30 +43,36 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         //Debug.Log("movecalled");
-        Vector3 movement = new Vector3(0,0,0);
+        Vector3 newPosition = new Vector3();
         if (Keyboard.current[Key.W].isPressed)
         {
             //Debug.Log("up");
-            movement.y = movement.y + 1;
+            newPosition.y = newPosition.y + 1;
 
 
         }
         if (Keyboard.current[Key.A].isPressed)
         {
             //Debug.Log("left");
-            movement.x = movement.x - 1;
+            newPosition.x = newPosition.x - 1;
         }
         if (Keyboard.current[Key.S].isPressed)
         {
             //Debug.Log("down");
-            movement.y = movement.y - 1;
+            newPosition.y = newPosition.y - 1;
         }
         if (Keyboard.current[Key.D].isPressed)
         {
             //Debug.Log("right");
-            movement.x = movement.x + 1;
+         
+            
+            
+            newPosition.x = newPosition.x + 1;
         }
-        player.transform.position = movement;
+
+
+        newPosition = newPosition.normalized;
+        player.transform.position += newPosition * playerspeed * Time.deltaTime; 
         
     }
 
