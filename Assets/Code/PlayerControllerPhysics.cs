@@ -83,7 +83,7 @@ public class PlayerControllerPhysics : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag(floortag))
+       if (collision.transform.CompareTag(floortag))
         {
             isGrounded=true;
         }
