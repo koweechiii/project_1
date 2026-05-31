@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerControllerTranslate : MonoBehaviour
 {
@@ -12,12 +13,17 @@ public class PlayerControllerTranslate : MonoBehaviour
     public float maxVelocity;
     public float fallMultiplier;
     public float maxFallSpeed = -20f;
+    bool isGrounded=false;
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.5f;
+    public LayerMask groundLayer;
 
     private void Update()
     {
         Move();
+         
         Gravity();
-
+      CheckGrounded();
     }
     Vector3 ReadInput()
     {
@@ -86,7 +92,22 @@ public class PlayerControllerTranslate : MonoBehaviour
         velocity.y = Mathf.Max(velocity.y, maxFallSpeed);
 
     }
+    void CheckGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
 
+        if (isGrounded)
+        {
+            if (velocity.y < 0)
+            {
+
+                velocity.y = 0;
+            }
+
+
+        }
+
+    }
 
 
 }

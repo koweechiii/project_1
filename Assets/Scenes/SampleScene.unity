@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 18167024}
   - component: {fileID: 18167023}
   - component: {fileID: 18167022}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bootswiththefloor (2)
   m_TagString: floortag
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: -12.54, y: 9.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 691965634}
   - component: {fileID: 691965633}
   - component: {fileID: 691965632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bootswiththefloor
   m_TagString: floortag
   m_Icon: {fileID: 0}
@@ -913,6 +913,37 @@ MonoBehaviour:
   player: {fileID: 951848473}
   number: 0
   playerspeed: 6
+--- !u!1 &965072117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 965072118}
+  m_Layer: 0
+  m_Name: spherecheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &965072118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965072117}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1097058473}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1097058467
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +983,11 @@ MonoBehaviour:
   maxVelocity: 1
   fallMultiplier: 1.5
   maxFallSpeed: -6.7
+  groundCheck: {fileID: 965072118}
+  groundCheckRadius: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!136 &1097058469
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1065,10 +1101,11 @@ Transform:
   m_GameObject: {fileID: 1097058467}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -12.54, y: 8.6, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 965072118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1215186414
@@ -1563,7 +1600,7 @@ GameObject:
   - component: {fileID: 1959543127}
   - component: {fileID: 1959543126}
   - component: {fileID: 1959543125}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bootswiththefloor (1)
   m_TagString: floortag
   m_Icon: {fileID: 0}
