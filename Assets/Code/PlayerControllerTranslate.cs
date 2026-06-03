@@ -7,6 +7,7 @@ public class PlayerControllerTranslate : MonoBehaviour
 {
     public float moveSpeed = 1f;
     public float jumpStr = 1f;
+    public float doubleJumpStr = 1f;
     public float gravity = 1f;
     public Transform player;
     Vector3 velocity;
@@ -16,6 +17,12 @@ public class PlayerControllerTranslate : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.5f;
     public LayerMask groundLayer;
+    public int maxJump = 3;
+    bool hasJumpedInAir = false;
+    int airJump = 0;
+    public int numberOfJumps = 0;
+    public Animator anim;
+
 
     private void Update()
         {
@@ -52,17 +59,30 @@ public class PlayerControllerTranslate : MonoBehaviour
     }
     void Jump()
         {
-            if (Keyboard.current[Key.Space].wasPressedThisFrame)
+            if (Keyboard.current[Key.Space].wasPressedThisFrame) 
                 {
-                  if (IsGrounded()) 
-                    {
-                        Debug.Log("was grounded");
-                        velocity.y += jumpStr;
-                    }
+               
+                      if (IsGrounded()) 
+                        {
+                            hasJumpedInAir = false;
+                            velocity.y = jumpStr;
+                        
+                        }
+                    else /// Not Grounded
+                        {
+                          if (hasJumpedInAir == false)
+                            {
+                                velocity.y = doubleJumpStr;
+                                hasJumpedInAir = true;
+                            }
+                        }
+
+
+          
 
                 }
+        }
 
-    }
     void Gravity()
     {
 
@@ -89,8 +109,64 @@ public class PlayerControllerTranslate : MonoBehaviour
 
             movement.x = ReadInput().x;
             movement.y = velocity.y;
+            
+            CtrlAnimator(movement);
 
+            
             player.position += movement * moveSpeed * Time.deltaTime;
+        }
+
+    void CtrlAnimator(Vector3 recivedMovement)
+        {
+            ///check if player is moving left/right
+            ///check if player is falling/jumping
+            ///
+
+            if(recivedMovement.x < 0)
+                {
+                    anim.transform.eulerAngles = new Vector3(0,180,0);
+                }
+            else
+                {
+                    anim.transform.eulerAngles = new Vector3(0,0,0);
+
+                }
+
+
+            if (recivedMovement.x == 0)
+                {
+                    anim.SetBool("isIdle", true);
+                    anim.SetBool("isRunning", false);
+                    anim.SetBool("isFalling", false);
+
+                   Debug.Log( "player is not moving");
+                }
+            else
+                {
+            
+                    anim.SetBool("isIdle", false);
+                    anim.SetBool("isRunning", true);
+                    anim.SetBool("isFalling", false);
+
+                    Debug.Log( "player is moving");
+                }
+
+
+            if (recivedMovement.y < 0)
+                {
+                    anim.SetBool("isIdle", false);
+                    anim.SetBool("isRunning", false);
+                    anim.SetBool("isFalling", true);
+
+                    Debug.Log(  "player is falling");
+                }
+            else
+                {
+            
+                    Debug.Log(  "player is jumping");
+                }
+
+
         }
 
     /// <summary>
