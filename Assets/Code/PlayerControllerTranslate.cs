@@ -13,17 +13,17 @@ public class PlayerControllerTranslate : MonoBehaviour
     public float maxVelocity;
     public float fallMultiplier;
     public float maxFallSpeed = -20f;
-    bool isGrounded=false;
     public Transform groundCheck;
     public float groundCheckRadius = 0.5f;
     public LayerMask groundLayer;
 
     private void Update()
-    {
-        Move();
-         
-        Gravity();
-      CheckGrounded();
+        {
+            Move();
+            Jump();
+
+            Gravity();
+            StopFalling();
     }
     Vector3 ReadInput()
     {
@@ -51,24 +51,17 @@ public class PlayerControllerTranslate : MonoBehaviour
         return newPos;
     }
     void Jump()
-    {
-        if (Keyboard.current[Key.Space].wasPressedThisFrame)
         {
+            if (Keyboard.current[Key.Space].wasPressedThisFrame)
+                {
+                  if (IsGrounded()) 
+                    {
+                        Debug.Log("was grounded");
+                        velocity.y += jumpStr;
+                    }
 
+                }
 
-        }
-           
-            
-    }
-        void Move()
-    {
-
-        Vector3 movement = Vector3.zero;
-
-        movement.x = ReadInput().x;
-        movement.y = velocity.y;
-
-        player.position += movement * moveSpeed * Time.deltaTime;
     }
     void Gravity()
     {
@@ -81,33 +74,44 @@ public class PlayerControllerTranslate : MonoBehaviour
       */
 
         if(velocity.y < 0)
-        {
-            currentGravity *= fallMultiplier;
-
-
-        }
+            {
+                currentGravity *= fallMultiplier;
+            }
 
         velocity.y -= currentGravity * Time.deltaTime;
-
         velocity.y = Mathf.Max(velocity.y, maxFallSpeed);
 
     }
-    void CheckGrounded()
-    {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
 
-        if (isGrounded)
+    void Move()
         {
-            if (velocity.y < 0)
-            {
+            Vector3 movement = Vector3.zero;
 
-                velocity.y = 0;
-            }
+            movement.x = ReadInput().x;
+            movement.y = velocity.y;
 
-
+            player.position += movement * moveSpeed * Time.deltaTime;
         }
 
-    }
+    /// <summary>
+    ///  we check if were are on the ground using checkShpere, if the ground is in side the check sphere radius we are "grounded"
+    ///  if were are "grounded" we make sure to stop moving down
+    /// </summary>
+    bool IsGrounded()
+        {
+            return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
+        }
+
+    void StopFalling()
+        {
+            if (IsGrounded())
+                {
+                    if (velocity.y < 0)
+                        {
+                            velocity.y = 0;
+                        }
+                }
+        }
 
 
 }
