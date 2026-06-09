@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerControllerTranslate
   moveSpeed: 6.7
   jumpStr: 2
-  doubleJumpStr: 1
+  doubleJumpStr: 1.75
   gravity: 4
   player: {fileID: 1097058473}
   maxVelocity: 1

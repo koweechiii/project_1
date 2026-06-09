@@ -117,53 +117,61 @@ public class PlayerControllerTranslate : MonoBehaviour
         }
 
     void CtrlAnimator(Vector3 recivedMovement)
+    {
+        ///check if player is moving left/right
+        ///check if player is falling/jumping
+        ///
+
+        if (recivedMovement.x < 0)
         {
-            ///check if player is moving left/right
-            ///check if player is falling/jumping
-            ///
+            anim.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        else
+        {
+            anim.transform.eulerAngles = new Vector3(0, 0, 0);
 
-            if(recivedMovement.x < 0)
-                {
-                    anim.transform.eulerAngles = new Vector3(0,180,0);
-                }
-            else
-                {
-                    anim.transform.eulerAngles = new Vector3(0,0,0);
-
-                }
+        }
 
 
-            if (recivedMovement.x == 0)
-                {
-                    anim.SetBool("isIdle", true);
-                    anim.SetBool("isRunning", false);
-                    anim.SetBool("isFalling", false);
+        if (recivedMovement.x == 0)
+        {
+            anim.SetBool("isIdle", true);
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isFalling", false);
+            anim.SetBool("isJumping", false);
 
-                   Debug.Log( "player is not moving");
-                }
-            else
-                {
-            
-                    anim.SetBool("isIdle", false);
-                    anim.SetBool("isRunning", true);
-                    anim.SetBool("isFalling", false);
+            Debug.Log("player is not moving");
+        }
+        else
+        {
 
-                    Debug.Log( "player is moving");
-                }
+            anim.SetBool("isIdle", false);
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isFalling", false);
+            anim.SetBool("isJumping", false);
+
+            Debug.Log("player is moving");
+        }
 
 
-            if (recivedMovement.y < 0)
-                {
-                    anim.SetBool("isIdle", false);
-                    anim.SetBool("isRunning", false);
-                    anim.SetBool("isFalling", true);
+        if (recivedMovement.y < 0)
+        {
+            anim.SetBool("isIdle", false);
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isFalling", true);
+            anim.SetBool("isJumping", false);
 
-                    Debug.Log(  "player is falling");
-                }
-            else
+            Debug.Log("player is falling");
+        }
+        else if(recivedMovement.y > 0)
                 {
             
                     Debug.Log(  "player is jumping");
+
+                    anim.SetBool("isIdle", false);
+                    anim.SetBool("isRunning", false);
+                    anim.SetBool("isFalling", false);
+                    anim.SetBool("isJumping", true);
                 }
 
 
